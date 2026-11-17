@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="google-site-verification" content="vU6MYIDyuL-nCi3Oca5e6jPYaKhLEQIzDus4lhjVohQ" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YerliYerBoBTv - Ana Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #0a0a0c;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            transition: background 0.5s ease, color 0.4s ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* GİRİŞ EKRANI (SPLASH SCREEN) */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #070709;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .welcome-logo {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, #e50914, #ff5252);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
+            margin-bottom: 10px;
+        }
+
+        .welcome-subtitle {
+            color: #888;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .start-btn {
+            background: #e50914;
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.6);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 1px;
+        }
+
+        .start-btn:hover {
+            background: #ff1e27;
+            transform: scale(1.08);
+            box-shadow: 0 0 45px rgba(255, 30, 39, 0.8);
+        }
+
+        /* YAPIMCILAR / JENERİK EKRANI (FULLSCREEN) */
+        .creators-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #180305 0%, #050203 90%);
+            z-index: 5000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            animation: fadeInCreators 0.4s ease forwards;
+        }
+
+        @keyframes fadeInCreators {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .creators-container {
+            max-width: 650px;
+            width: 100%;
+            background: rgba(15, 15, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(229, 9, 20, 0.6);
+            border-radius: 20px;
+            padding: 35px 25px;
+            box-shadow: 0 0 50px rgba(229, 9, 20, 0.4);
+            text-align: center;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .creators-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #e50914;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(229,9,20,0.6);
+        }
+
+        .creators-subtitle {
+            font-size: 12px;
+            font-weight: 700;
+            color: #ffcc00;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .creator-section {
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .creator-role {
+            font-size: 11px;
+            font-weight: 800;
+            color: #ff5252;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .creator-name {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .creator-desc {
+            font-size: 12px;
+            color: #aaaaaa;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .close-creators-btn {
+            background: #e50914;
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 800;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(229,9,20,0.7);
+            transition: all 0.2s ease;
+        }
+
+        .close-creators-btn:hover {
+            background: #ff1e27;
+            transform: scale(1.05);
+        }
+
+        /* TEMALAR */
+        body.theme-white {
+            background-color: #f4f5f9 !important;
+            background-image: none !important;
+            color: #111111 !important;
+        }
+
+        body.theme-rgb {
+            background-image: linear-gradient(-45deg, #ff0055, #ff7300, #00e5ff, #7a00ff, #ff00c8) !important;
+            background-size: 400% 400% !important;
+            animation: rgbGlow 8s ease infinite !important;
+            color: #ffffff !important;
+        }
+
+        @keyframes rgbGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* SİNEMA SALONU MODU STİLLERİ */
+        body.theme-cinema {
+            background: radial-gradient(circle at center top, #1a080c 0%, #050204 80%) !important;
+            position: relative;
+        }
+
+        .cinema-overlay {
+            display: none;
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 800;
+        }
+
+        body.theme-cinema .cinema-overlay {
+            display: block;
+        }
+
+        .cinema-curtain-left, .cinema-curtain-right {
+            position: absolute;
+            top: 0;
+            width: 10vw;
+            height: 100%;
+            background: linear-gradient(90deg, #500000 0%, #800000 40%, #300000 100%);
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
+        }
+
+        .cinema-curtain-left { left: 0; border-right: 4px solid #200000; }
+        .cinema-curtain-right { right: 0; border-left: 4px solid #200000; }
+
+        .cinema-seats {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background-repeat: repeat-x;
+            background-size: 140px 110px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 110"><path d="M10,40 Q10,20 25,20 L45,20 Q60,20 60,40 L60,80 L10,80 Z" fill="%23800a0a" stroke="%23300202" stroke-width="2"/><path d="M20,15 Q35,5 50,15 L50,65 Q35,55 20,65 Z" fill="%23b30e0e"/><rect x="5" y="60" width="60" height="25" rx="8" fill="%235a0606"/><path d="M80,40 Q80,20 95,20 L115,20 Q130,20 130,40 L130,80 L80,80 Z" fill="%23800a0a" stroke="%23300202" stroke-width="2"/><path d="M90,15 Q105,5 120,15 L120,65 Q105,55 90,65 Z" fill="%23b30e0e"/><rect x="75" y="60" width="60" height="25" rx="8" fill="%235a0606"/></svg>');
+            opacity: 0.85;
+            filter: drop-shadow(0 -10px 15px rgba(0,0,0,0.8));
+        }
+
+        /* POPCORN KUTUSU */
+        .popcorn-container {
+            display: none;
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 2000;
+            cursor: pointer;
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body.theme-cinema .popcorn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .popcorn-box {
+            width: 75px;
+            height: 90px;
+            position: relative;
+            background: repeating-linear-gradient(90deg, #e50914, #e50914 12px, #ffffff 12px, #ffffff 24px);
+            clip-path: polygon(10% 100%, 90% 100%, 100% 0, 0 0);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+            border-radius: 4px;
+        }
+
+        .popcorn-label {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffcc00;
+            color: #000;
+            font-weight: 900;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 2px solid #000;
+            white-space: nowrap;
+        }
+
+        .popcorn-top {
+            font-size: 26px;
+            margin-bottom: -15px;
+            z-index: 2;
+        }
+
+        .popcorn-hint {
+            background: rgba(0,0,0,0.85);
+            color: #ffcc00;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-top: 8px;
+            border: 1px solid #ffcc00;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .popcorn-container:active {
+            transform: scale(0.9);
+        }
+
+        .popcorn-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2100;
+            font-size: 20px;
+            animation: popFly 0.8s ease-out forwards;
+        }
+
+        @keyframes popFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(0.6) rotate(0deg); }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.4) rotate(360deg); }
+        }
+
+        .exit-cinema-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 2000;
+            background: #e50914;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
+        }
+
+        body.theme-cinema .exit-cinema-btn {
+            display: block;
+        }
+
+        /* HEADER & LOGO */
+        header {
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 16px 25px;
+            font-size: 24px;
+            font-weight: 900;
+            color: #e50914;
+            letter-spacing: 2px;
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(229, 9, 20, 0.3);
+            box-shadow: 0 4px 25px rgba(229, 9, 20, 0.15);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .logo-text {
+            background: linear-gradient(45deg, #e50914, #ff5252);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+        }
+
+        .announcement-bar {
+            background: linear-gradient(90deg, #120304, #2a080c, #120304);
+            border-top: 1px solid rgba(229, 9, 20, 0.4);
+            border-bottom: 1px solid rgba(229, 9, 20, 0.4);
+            color: #ffffff;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 950;
+        }
+
+        .announcement-badge {
+            background: #e50914;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-left: 15px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.3; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1.2); }
+        }
+
+        .announcement-track {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .announcement-text {
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #ffcccc;
+            animation: marquee 30s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .header-btn {
+            background: linear-gradient(135deg, #1f1f1f, #2d2d2d);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn:hover {
+            border-color: #e50914;
+            transform: translateY(-1px);
+        }
+
+        .settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2500;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .settings-content {
+            background: #141419;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(229, 9, 20, 0.5);
+            width: 90%;
+            max-width: 340px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .theme-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .theme-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn-black { background: #000; color: #fff; border: 1px solid #333; }
+        .btn-white { background: #fff; color: #111; border: 1px solid #ccc; }
+        .btn-rgb { background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff); color: #fff; }
+        .btn-cinema { background: linear-gradient(135deg, #800000, #e50914); color: #fff; border: 1px solid #ffcc00; }
+        .btn-welcome { background: #1f1f26; color: #ff5252; border: 1px solid rgba(229, 9, 20, 0.4); }
+
+        .close-btn {
+            background: #e50914;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            width: 100%;
+        }
+
+        /* VIP REKLAM BANNERI */
+        .top-ad-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto 10px auto;
+            max-width: 820px;
+            padding: 0 15px;
+            position: relative;
+            z-index: 900;
+        }
+
+        .casino-ad {
+            width: 100%;
+            background: linear-gradient(135deg, #141310 0%, #281e05 100%);
+            border: 1px solid #ffaa00;
+            border-radius: 14px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 6px 25px rgba(255, 170, 0, 0.2);
+        }
+
+        .ad-badge {
+            background: linear-gradient(135deg, #e50914, #ff3333);
+            color: #fff;
+            font-weight: 900;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .ad-content {
+            text-align: left;
+            margin: 0 15px;
+            flex-grow: 1;
+        }
+
+        .ad-title { color: #ffaa00; font-size: 15px; font-weight: 800; }
+        .ad-desc { color: #bbb; font-size: 11px; margin-top: 2px; }
+
+        .ad-btn {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            color: #000;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .left-ad-banner {
+            position: fixed;
+            top: 110px;
+            left: 20px;
+            width: 58px;
+            bottom: 100px;
+            background: rgba(18, 18, 22, 0.9);
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            z-index: 900;
+        }
+
+        .ad-hashtag {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: #e50914;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            border-radius: 50%;
+        }
+
+        .ad-text-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 7px;
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 10px auto 20px auto;
+            padding: 10px 15px;
+            padding-bottom: 140px;
+            position: relative;
+            z-index: 900;
+        }
+
+        .countdown-banner {
+            background: linear-gradient(135deg, #181820 0%, #2b080a 100%);
+            border: 1px solid rgba(229, 9, 20, 0.5);
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .countdown-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ff5252;
+            text-align: left;
+        }
+
+        .countdown-timer {
+            font-size: 16px;
+            font-weight: 900;
+            color: #00ffcc;
+            background: #08080a;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 204, 0.3);
+        }
+
+        .episode-card {
+            display: none;
+            background: #141419;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            text-align: left;
+            color: #ffffff;
+        }
+
+        .episode-card.aktif {
+            display: block;
+        }
+
+        .episode-card h3 {
+            margin-top: 0;
+            color: #e50914;
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        /* EKRAN İÇİ VİDEO KUTUSU VE REKLAM TASARIMI */
+        .player-box {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-top: 15px;
+            background: #000;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .player-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(229, 9, 20, 0.95);
+            color: white;
+            width: 72px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.8);
+        }
+
+        /* EKRAN İÇİ SPONSOR REKLAM OVERLAY */
+        .inplayer-ad-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(20, 15, 5, 0.96) 0%, rgba(40, 25, 0, 0.96) 100%);
+            border: 3px solid #ffcc00;
+            border-radius: 12px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+            animation: adIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes adIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .inplayer-ad-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #e50914;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .inplayer-skip-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffaa00;
+            border: 1px solid #ffaa00;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: not-allowed;
+            transition: all 0.2s ease;
+        }
+
+        .inplayer-skip-btn.ready {
+            background: #e50914;
+            color: #ffffff;
+            border-color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 0 12px #e50914;
+        }
+
+        .inplayer-speaker {
+            font-size: 36px;
+            margin-bottom: 6px;
+            animation: speakPulse 0.7s infinite alternate;
+        }
+
+        @keyframes speakPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
+
+        .inplayer-title {
+            color: #ffcc00;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255,204,0,0.6);
+            margin: 0;
+        }
+
+        .inplayer-speech-text {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px dashed #ffcc00;
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin: 10px 0;
+            max-width: 90%;
+        }
+
+        .inplayer-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .inplayer-coupon {
+            background: linear-gradient(90deg, #ff0055, #ffaa00);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .inplayer-link-btn {
+            background: #ffaa00;
+            color: #000;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .player-box iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding-bottom: 80px;
+            font-size: 12px;
+            color: #777777;
+            font-weight: 600;
+        }
+
+        .episode-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 14px 20px;
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid rgba(229, 9, 20, 0.3);
+            z-index: 1000;
+            overflow-x: auto;
+        }
+
+        .episode-btn {
+            flex: 0 0 auto;
+            background: #1a1a20;
+            color: #bbb;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 9px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .episode-btn.aktif-btn {
+            background: #e50914;
+            color: #ffffff;
+            border-color: #e50914;
+        }
+
+        @media (max-width: 900px) {
+            .left-ad-banner, .cinema-curtain-left, .cinema-curtain-right { display: none; }
+            .inplayer-speech-text { font-size: 10px; padding: 6px 8px; }
+            .inplayer-title { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SİNEMA MODU KATMANI -->
+    <div class="cinema-overlay">
+        <div class="cinema-curtain-left"></div>
+        <div class="cinema-curtain-right"></div>
+        <div class="cinema-seats"></div>
+    </div>
+
+    <button class="exit-cinema-btn" onclick="temaDegistir('black')">✖ Sinemadan Çık</button>
+
+    <!-- INTERAKTİF POPCORN KUTUSU -->
+    <div class="popcorn-container" id="popcornBtn" onclick="misirYe(event)">
+        <div class="popcorn-top">🍿</div>
+        <div class="popcorn-box">
+            <div class="popcorn-label">BoB POP!</div>
+        </div>
+        <div class="popcorn-hint">Kıtırdat! 🍿</div>
+    </div>
+
+    <!-- GİRİŞ EKRANI (SPLASH SCREEN) -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-logo">YERLİYERBOBTV</div>
+        <div class="welcome-subtitle">YerliYerBobTv Gerçek Ana Sitesidir.</div>
+        <button class="start-btn" onclick="izlemeyeBasla()">İzlemeye Başla ▶</button>
+    </div>
+
+    <!-- YAPIMCILAR EKRANI (TAM EKRAN JENERİK) -->
+    <div class="creators-screen" id="creatorsScreen">
+        <div class="creators-container">
+            <div class="creators-title">YERLİYERBOBTv</div>
+            <div class="creators-subtitle">Resmi Yapımcılar & Künye</div>
+            
+            <div class="creator-section">
+                <div class="creator-role">GENEL YAYIN YÖNETMENİ & BAŞ YAPIMCI</div>
+                <div class="creator-name">Müncük & Cümcük Ekibi</div>
+                <div class="creator-desc">Projenin tüm vizyon ve kaotik atmosfer tasarımcısı.</div>
+            </div>
+
+            <div class="creator-section">
+                <div class="creator-role">TEKNOLOJİ & YAZILIM ALTYAPISI</div>
+                <div class="creator-name">Full-Stack & Web Audio Mühendisliği</div>
+                <div class="creator-desc">Tek dosyalık HTML5, Web Speech ve ses motoru entegrasyonu.</div>
+            </div>
+
+            <div class="creator-section">
+                <div class="creator-role">BAŞ SPONSOR & FİNANSAL DESTEK</div>
+                <div class="creator-name">YerliBet VIP Sponsorluk</div>
+                <div class="creator-desc">"Geçen daha çıkmadı!" sloganıyla dizinin nakit akışını sağlayan dev güç.</div>
+            </div>
+
+            <div class="creator-section">
+                <div class="creator-role">SAHNE & REJİ</div>
+                <div class="creator-name">Sinema Salonu & Popcorn Ekibi</div>
+                <div class="creator-desc">Kırmızı perdeler, sesli reklamlar ve interaktif deneyimler.</div>
+            </div>
+
+            <button class="close-creators-btn" onclick="yapimcilariKapat()">Kapat & Geri Dön 🎬</button>
+        </div>
+    </div>
+
+    <header>
+        <span class="logo-text">YERLİYERBOBTV</span>
+        <div class="header-actions">
+            <button class="header-btn" onclick="yapimcilariAc()">🎬 Yapımcılar</button>
+            <button class="header-btn" onclick="modalAc()">⚙️ Ayarlar</button>
+        </div>
+    </header>
+
+    <div class="announcement-bar">
+        <div class="announcement-badge">
+            <span class="live-dot"></span> CANLI ANONS
+        </div>
+        <div class="announcement-track">
+            <div class="announcement-text">
+                📢 DUYURU: Yeni Sezonda Gerçek Hayata Geçiş Yapacağız Ve Belirli Oyuncular Para Karşılığında Oyuncumuz Veya Konuk Oyuncumuz Olacaktır Aralarında Sizinde Reklam Desteğinizle Oyuncularımızın Maaşları Verilerek Uzun Süre Dizimiz Ayakta Durarak Sizlerle Beraber Olacağız, İyi Seyirler Dileriz.
+            </div>
+        </div>
+    </div>
+
+    <!-- AYARLAR MODALI -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h3>🎨 Platform Ayarları</h3>
+            <div class="theme-options">
+                <button class="theme-btn btn-cinema" onclick="temaDegistir('cinema')">🎬 Sinema Salonu Modu</button>
+                <button class="theme-btn btn-black" onclick="temaDegistir('black')">⚫ Koyu Sinema Teması</button>
+                <button class="theme-btn btn-white" onclick="temaDegistir('white')">⚪ Aydınlık Tema</button>
+                <button class="theme-btn btn-rgb" onclick="temaDegistir('rgb')">🌈 RGB Canlı Mod</button>
+                <button class="theme-btn btn-welcome" onclick="girisEkraninaDon()">🏠 Giriş Ekranına Dön</button>
+            </div>
+            <button class="close-btn" onclick="modalKapat()">Kapat</button>
+        </div>
+    </div>
+
+    <!-- SPONSOR REKLAM ALANI -->
+    <div class="top-ad-container">
+        <div class="casino-ad">
+            <div class="ad-badge">%50<br>İNDİRİM!</div>
+            <div class="ad-content">
+                <div class="ad-title">👑 YERLİBET SPONSOR VIP</div>
+                <div class="ad-desc">YerliYerBoBTv İzleyicilerine Özel Ayrıcalıklı İndirim Kodu</div>
+            </div>
+            <a href="https://www.youtube.com/@ossurukhehe" target="_blank" class="ad-btn">KANALA GİT 🔥</a>
+        </div>
+    </div>
+
+    <div class="left-ad-banner">
+        <div class="ad-hashtag">#</div>
+        <div class="ad-text-vertical">BoBTv34</div>
+    </div>
+
+    <div class="container">
+        <div class="countdown-banner">
+            <div class="countdown-title">🎬 4. BÖLÜM<br>YAYINLANMA SAYACI</div>
+            <div class="countdown-timer" id="geriSayim">Yükleniyor...</div>
+        </div>
+
+        <!-- 1. BÖLÜM -->
+        <div id="ep1" class="episode-card aktif">
+            <h3>1. Sezon - 1. Bölüm</h3>
+            <div class="player-box" id="box-ep1" onclick="ekranIciReklamBaslat('box-ep1', 'XM0ePXcSQiI')">
+                <img src="https://img.youtube.com/vi/XM0ePXcSQiI/maxresdefault.jpg" alt="1. Bölüm Kapak">
+                <div class="play-overlay">▶</div>
+            </div>
+            <div class="nav-controls">
+                <button class="nav-btn" style="visibility: hidden;">◀ Önceki</button>
+                <button class="nav-btn" onclick="sonrakiBolumReklamli(2)">Sonraki Bölüm ▶</button>
+            </div>
+        </div>
+
+        <!-- 2. BÖLÜM -->
+        <div id="ep2" class="episode-card">
+            <h3>1. Sezon - 2. Bölüm</h3>
+            <div class="player-box" id="box-ep2" onclick="ekranIciReklamBaslat('box-ep2', '8JsNK6Epe_8')">
+                <img src="https://img.youtube.com/vi/8JsNK6Epe_8/maxresdefault.jpg" alt="2. Bölüm Kapak">
+                <div class="play-overlay">▶</div>
+            </div>
+            <div class="nav-controls">
+                <button class="nav-btn" onclick="sonrakiBolumReklamli(1)">◀ Önceki Bölüm</button>
+                <button class="nav-btn" onclick="sonrakiBolumReklamli(3)">Sonraki Bölüm ▶</button>
+            </div>
+        </div>
+
+        <!-- 3. BÖLÜM -->
+        <div id="ep3" class="episode-card">
+            <h3>1. Sezon - 3. Bölüm (Sezon Finali)</h3>
+            <div class="player-box" id="box-ep3" onclick="ekranIciReklamBaslat('box-ep3', 'd85A52xLzMk')">
+                <img src="https://img.youtube.com/vi/d85A52xLzMk/maxresdefault.jpg" alt="3. Bölüm Kapak">
+                <div class="play-overlay">▶</div>
+            </div>
+            <div class="nav-controls">
+                <button class="nav-btn" onclick="sonrakiBolumReklamli(2)">◀ Önceki Bölüm</button>
+                <button class="nav-btn" style="visibility: hidden;">Sonraki ▶</button>
+            </div>
+        </div>
+
+        <footer>
+            YerliYerBoBTv © 2026 -- Tüm Hakları Saklıdır.
+        </footer>
+    </div>
+
+    <!-- ALT BÖLÜM SEÇME BARI -->
+    <div class="episode-bar">
+        <button class="episode-btn aktif-btn" id="btn-ep1" onclick="bolumDegis('ep1', this)">1. Bölüm</button>
+        <button class="episode-btn" id="btn-ep2" onclick="bolumDegis('ep2', this)">2. Bölüm</button>
+        <button class="episode-btn" id="btn-ep3" onclick="bolumDegis('ep3', this)">3. Bölüm</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            let kayitliTema = localStorage.getItem('yerli_tema');
+            if (kayitliTema) {
+                temaDegistir(kayitliTema);
+            }
+            sayaciBaslat();
+        };
+
+        /* YAPIMCILAR EKRANI KONTROLLERİ */
+        function yapimcilariAc() {
+            document.getElementById('creatorsScreen').style.display = 'flex';
+        }
+
+        function yapimcilariKapat() {
+            document.getElementById('creatorsScreen').style.display = 'none';
+        }
+
+        /* REKLAM VE EKRAN İÇİ SESLENDİRME MANTIĞI */
+        let activeAdTimer = null;
+
+        function ekranIciReklamBaslat(boxId, videoId) {
+            const box = document.getElementById(boxId);
+            
+            if(box.querySelector('.inplayer-ad-overlay')) return;
+
+            let remaining = 5;
+
+            const adHTML = `
+                <div class="inplayer-ad-overlay" id="adOverlay-${boxId}">
+                    <span class="inplayer-ad-tag">SPONSOR REKLAMI</span>
+                    <button class="inplayer-skip-btn" id="skipBtn-${boxId}" onclick="reklamiGecVeyaBitir('${boxId}', '${videoId}', event)">Reklamı Geç (${remaining})</button>
+                    <div class="inplayer-speaker">🔊👑</div>
+                    <h4 class="inplayer-title">YERLİBET VIP SPONSOR</h4>
+                    <div class="inplayer-speech-text">
+                        "YerliBet'i geçen daha çıkmadı! Sen de YerliBet'e destek ol, anında reklam indirimi kuponunu kap!"
+                    </div>
+                    <div class="inplayer-action-bar">
+                        <span class="inplayer-coupon">🎟 KUPON: BoBTv34</span>
+                        <a href="https://www.youtube.com/@ossurukhehe" target="_blank" class="inplayer-link-btn" onclick="event.stopPropagation()">DESTEK OL 🔥</a>
+                    </div>
+                </div>
+            `;
+
+            box.insertAdjacentHTML('beforeend', adHTML);
+
+            const skipBtn = document.getElementById(`skipBtn-${boxId}`);
+
+            clearInterval(activeAdTimer);
+            activeAdTimer = setInterval(() => {
+                remaining--;
+                if (remaining > 0) {
+                    skipBtn.innerText = `Reklamı Geç (${remaining})`;
+                } else {
+                    clearInterval(activeAdTimer);
+                    skipBtn.innerText = "Reklamı Geç ▶";
+                    skipBtn.classList.add('ready');
+                }
+            }, 1000);
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const textToSpeak = "YerliBet'i geçen daha çıkmadı! Sen de YerliBet'e destek ol, anında reklam indirimi kuponunu kap!";
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.lang = 'tr-TR';
+                utterance.rate = 1.05;
+                utterance.pitch = 1.1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function reklamiGecVeyaBitir(boxId, videoId, e) {
+            if(e) e.stopPropagation();
+            const skipBtn = document.getElementById(`skipBtn-${boxId}`);
+            
+            if (!skipBtn.classList.contains('ready')) return;
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+
+            videoOynat(boxId, videoId);
+        }
+
+        function sonrakiBolumReklamli(targetNum) {
+            let targetEpId = 'ep' + targetNum;
+            let targetBtnId = 'btn-ep' + targetNum;
+            bolumDegis(targetEpId, document.getElementById(targetBtnId));
+
+            let boxId = 'box-ep' + targetNum;
+            let videoIds = { 1: 'XM0ePXcSQiI', 2: '8JsNK6Epe_8', 3: 'd85A52xLzMk' };
+            ekranIciReklamBaslat(boxId, videoIds[targetNum]);
+        }
+
+        const HEDEF_TARIH = new Date("2027-05-30T00:00:00").getTime();
+
+        function sayaciBaslat() {
+            function hesaplaVeYazdir() {
+                let simdi = new Date().getTime();
+                let fark = HEDEF_TARIH - simdi;
+
+                if (fark <= 0) {
+                    document.getElementById("geriSayim").innerHTML = "🔥 ÇOK YAKINDA YAYINDAYIZ!";
+                    return;
+                }
+
+                let gun = Math.floor(fark / (1000 * 60 * 60 * 24));
+                let saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
+                let saniye = Math.floor((fark % (1000 * 60)) / 1000);
+
+                document.getElementById("geriSayim").innerHTML = `${gun}g ${saat}s ${dakika}d ${saniye}s`;
+            }
+
+            hesaplaVeYazdir();
+            setInterval(hesaplaVeYazdir, 1000);
+        }
+
+        function izlemeyeBasla() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+        }
+
+        function girisEkraninaDon() {
+            modalKapat();
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+        }
+
+        function bolumDegis(epId, btn) {
+            var kartlar = document.getElementsByClassName('episode-card');
+            for (var i = 0; i < kartlar.length; i++) {
+                kartlar[i].classList.remove('aktif');
+            }
+            document.getElementById(epId).classList.add('aktif');
+
+            var butonlar = document.getElementsByClassName('episode-btn');
+            for (var i = 0; i < butonlar.length; i++) {
+                butonlar[i].classList.remove('aktif-btn');
+            }
+            if(btn) btn.classList.add('aktif-btn');
+        }
+
+        function videoOynat(boxId, videoId) {
+            let box = document.getElementById(boxId);
+            box.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+        }
+
+        function modalAc() {
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+
+        function modalKapat() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+
+        function temaDegistir(tema) {
+            document.body.classList.remove('theme-white', 'theme-rgb', 'theme-cinema');
+            if (tema === 'white') {
+                document.body.classList.add('theme-white');
+            } else if (tema === 'rgb') {
+                document.body.classList.add('theme-rgb');
+            } else if (tema === 'cinema') {
+                document.body.classList.add('theme-cinema');
+            }
+            localStorage.setItem('yerli_tema', tema);
+            modalKapat();
+        }
+
+        /* WEB AUDIO API ILE MISIR KITIRDAMA SESI */
+        let audioCtx = null;
+
+        function playCrunchSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const burstCount = 4 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < burstCount; i++) {
+                    setTimeout(() => {
+                        let bufferSize = audioCtx.sampleRate * 0.04;
+                        let buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                        let output = buffer.getChannelData(0);
+
+                        for (let j = 0; j < bufferSize; j++) {
+                            output[j] = Math.random() * 2 - 1;
+                        }
+
+                        let whiteNoise = audioCtx.createBufferSource();
+                        whiteNoise.buffer = buffer;
+
+                        let filter = audioCtx.createBiquadFilter();
+                        filter.type = 'bandpass';
+                        filter.frequency.value = 1200 + Math.random() * 2400;
+                        filter.Q.value = 3;
+
+                        let gain = audioCtx.createGain();
+                        gain.gain.setValueAtTime(0.3 + Math.random() * 0.3, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.035);
+
+                        whiteNoise.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(audioCtx.destination);
+
+                        whiteNoise.start();
+                    }, i * 35 + Math.random() * 15);
+                }
+            } catch(e) {
+                console.log("Audio not supported or blocked", e);
+            }
+        }
+
+        function misirYe(e) {
+            playCrunchSound();
+
+            const rect = e.currentTarget.getBoundingClientRect();
+            const startX = rect.left + rect.width / 2;
+            const startY = rect.top + 10;
+
+            const popcornEmojis = ['🍿', '🌽', '✨', '💛'];
+
+            for (let i = 0; i < 6; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'popcorn-particle';
+                particle.innerText = popcornEmojis[Math.floor(Math.random() * popcornEmojis.length)];
+                
+                particle.style.left = startX + 'px';
+                particle.style.top = startY + 'px';
+
+                const dx = (Math.random() - 0.5) * 160 + 'px';
+                const dy = -(Math.random() * 140 + 60) + 'px';
+
+                particle.style.setProperty('--dx', dx);
+                particle.style.setProperty('--dy', dy);
+
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 800);
+            }
+        }
+    </script>
+</body>
+</html>
