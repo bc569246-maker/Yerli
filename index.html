@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta name="google-site-verification" content="vU6MYIDyuL-nCi3Oca5e6jPYaKhLEQIzDus4lhjVohQ" />
+    <meta name="google-site-verification" content="dZ9racSAt9fwvMU1tPhnxJgl1rD2jDc6cv58jHyK4u0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YerliYerBoBTv - Ana Platform</title>
@@ -84,111 +84,6 @@
             background: #ff1e27;
             transform: scale(1.08);
             box-shadow: 0 0 45px rgba(255, 30, 39, 0.8);
-        }
-
-        /* YAPIMCILAR / JENERİK EKRANI (FULLSCREEN) */
-        .creators-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #180305 0%, #050203 90%);
-            z-index: 5000;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            animation: fadeInCreators 0.4s ease forwards;
-        }
-
-        @keyframes fadeInCreators {
-            from { opacity: 0; transform: scale(0.96); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .creators-container {
-            max-width: 650px;
-            width: 100%;
-            background: rgba(15, 15, 20, 0.85);
-            backdrop-filter: blur(15px);
-            border: 2px solid rgba(229, 9, 20, 0.6);
-            border-radius: 20px;
-            padding: 35px 25px;
-            box-shadow: 0 0 50px rgba(229, 9, 20, 0.4);
-            text-align: center;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .creators-title {
-            font-size: 28px;
-            font-weight: 900;
-            color: #e50914;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(229,9,20,0.6);
-        }
-
-        .creators-subtitle {
-            font-size: 12px;
-            font-weight: 700;
-            color: #ffcc00;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-        }
-
-        .creator-section {
-            margin-bottom: 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .creator-role {
-            font-size: 11px;
-            font-weight: 800;
-            color: #ff5252;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .creator-name {
-            font-size: 18px;
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: 1px;
-        }
-
-        .creator-desc {
-            font-size: 12px;
-            color: #aaaaaa;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        .close-creators-btn {
-            background: #e50914;
-            color: #ffffff;
-            border: none;
-            padding: 12px 30px;
-            font-size: 14px;
-            font-weight: 800;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 0 20px rgba(229,9,20,0.7);
-            transition: all 0.2s ease;
-        }
-
-        .close-creators-btn:hover {
-            background: #ff1e27;
-            transform: scale(1.05);
         }
 
         /* TEMALAR */
@@ -941,44 +836,9 @@
         <button class="start-btn" onclick="izlemeyeBasla()">İzlemeye Başla ▶</button>
     </div>
 
-    <!-- YAPIMCILAR EKRANI (TAM EKRAN JENERİK) -->
-    <div class="creators-screen" id="creatorsScreen">
-        <div class="creators-container">
-            <div class="creators-title">YERLİYERBOBTv</div>
-            <div class="creators-subtitle">Resmi Yapımcılar & Künye</div>
-            
-            <div class="creator-section">
-                <div class="creator-role">GENEL YAYIN YÖNETMENİ & BAŞ YAPIMCI</div>
-                <div class="creator-name">Müncük & Cümcük Ekibi</div>
-                <div class="creator-desc">Projenin tüm vizyon ve kaotik atmosfer tasarımcısı.</div>
-            </div>
-
-            <div class="creator-section">
-                <div class="creator-role">TEKNOLOJİ & YAZILIM ALTYAPISI</div>
-                <div class="creator-name">Full-Stack & Web Audio Mühendisliği</div>
-                <div class="creator-desc">Tek dosyalık HTML5, Web Speech ve ses motoru entegrasyonu.</div>
-            </div>
-
-            <div class="creator-section">
-                <div class="creator-role">BAŞ SPONSOR & FİNANSAL DESTEK</div>
-                <div class="creator-name">YerliBet VIP Sponsorluk</div>
-                <div class="creator-desc">"Geçen daha çıkmadı!" sloganıyla dizinin nakit akışını sağlayan dev güç.</div>
-            </div>
-
-            <div class="creator-section">
-                <div class="creator-role">SAHNE & REJİ</div>
-                <div class="creator-name">Sinema Salonu & Popcorn Ekibi</div>
-                <div class="creator-desc">Kırmızı perdeler, sesli reklamlar ve interaktif deneyimler.</div>
-            </div>
-
-            <button class="close-creators-btn" onclick="yapimcilariKapat()">Kapat & Geri Dön 🎬</button>
-        </div>
-    </div>
-
     <header>
         <span class="logo-text">YERLİYERBOBTV</span>
         <div class="header-actions">
-            <button class="header-btn" onclick="yapimcilariAc()">🎬 Yapımcılar</button>
             <button class="header-btn" onclick="modalAc()">⚙️ Ayarlar</button>
         </div>
     </header>
@@ -1091,15 +951,6 @@
             }
             sayaciBaslat();
         };
-
-        /* YAPIMCILAR EKRANI KONTROLLERİ */
-        function yapimcilariAc() {
-            document.getElementById('creatorsScreen').style.display = 'flex';
-        }
-
-        function yapimcilariKapat() {
-            document.getElementById('creatorsScreen').style.display = 'none';
-        }
 
         /* REKLAM VE EKRAN İÇİ SESLENDİRME MANTIĞI */
         let activeAdTimer = null;
